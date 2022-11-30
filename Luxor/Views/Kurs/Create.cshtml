@@ -1,0 +1,93 @@
+﻿@model Luxor.Models.Kurs
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Kurs</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1">Basisinformation</a></li>
+            <li><a href="#tabs-2">Andere</a></li>
+        </ul>
+        <div id="tabs-1">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Titel, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Titel, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Titel, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Kredite, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Kredite, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Kredite, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Ebene, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @*@Html.EnumDropDownListFor(model => model.Ebene, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @*@Html.EnumDropDownListFor(model => model.Ebene, "Bitte auswählen")*@
+                    @Html.DropDownList("Ebene",
+           EnumHelper.GetSelectList(typeof(Luxor.Models.KursEbene)), "Bitte auswählen",
+        new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.Ebene, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IstKursAktiv, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @*@Html.EditorFor(model => model.IstKursAktiv, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.EditorFor(model => model.IstKursAktiv)
+
+                    @Html.ValidationMessageFor(model => model.IstKursAktiv, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div id="tabs-2">
+            <div class="form-group">
+                @Html.LabelFor(model => model.KursBeschreibung, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @*@Html.EditorFor(model => model.KursBeschreibung, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.TextAreaFor(model => model.KursBeschreibung, 8, 30, htmlAttributes: new { style = "width:100%;max-width:100%;" })
+
+                    @Html.ValidationMessageFor(model => model.KursBeschreibung, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <br />
+    <div class="form-group">
+        <div class=" col-md-10">
+            <input type="submit" value="Create" class="btn btn-success" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

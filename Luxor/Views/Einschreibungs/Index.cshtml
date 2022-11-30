@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Luxor.Models.Einschreibung>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Noten)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kurs.Titel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student.NachName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Noten)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Kurs.Titel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Student.NachName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.EinschreibungID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.EinschreibungID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.EinschreibungID })
+        </td>
+    </tr>
+}
+
+</table>

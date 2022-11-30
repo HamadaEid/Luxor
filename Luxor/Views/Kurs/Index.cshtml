@@ -1,0 +1,144 @@
+﻿
+
+@model IEnumerable<Luxor.Models.Kurs>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+
+
+<link rel="stylesheet" src="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" />
+
+
+<link rel="stylesheet" src="https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap4.min.css" />
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table id="myTable" class="table table-striped table-bordered nowrap" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Titel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kredite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KursBeschreibung)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Preis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ebene)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IstKursAktiv)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kredite)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KursBeschreibung)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Preis)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ebene)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IstKursAktiv)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.KursID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.KursID }) |
+
+                    @*@Html.ActionLink("Delete", "Delete", new { id = item.KursID })*@
+                    <a class="btn btn-danger" data-model-id="@item.KursID" onclick="Delete(this)">Delete ?</a>
+
+                    <script>
+                        function Delete(obj) {
+
+                            swal({
+                                title: 'Sind Sie sicher ?',
+                                text: "Sie können dies nicht rückgängig machen!",
+                                icon: 'warning'
+                            }).then((result) => {
+                                if (result) {
+                                    var ele = $(obj);
+                                    var Id = ele.data("model-id");
+                                    var url = "/Kurs/DeleteConfirmedJson/" + Id;
+                                    $.ajax({
+                                        url: url,
+                                        type: "Post",
+
+                                        success: function () {
+                                            ele.closest("tr").remove();
+                                        },
+                                        error: function () {
+                                            toaster.error('Failed!');
+
+                                        }
+                                    });
+                                    toaster.success('Deleted');
+                                }
+                            })
+                        };
+
+
+                    </script>
+                </td>
+            </tr>
+
+        
+        }
+    </tbody>
+</table>
+<br />
+
+<div id="accordion">
+    @foreach (var Kurs in Model)
+    {
+    <h3>@Kurs.Titel</h3>
+    <div>
+        @*<p>
+            @Kurs.Kredite
+        </p>*@
+        @foreach (var item in Kurs.Einschreibungs)
+        {
+
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <img src="~/Content/images/Studenten/@Url.Content(item.Student.FotoPfad )" style="width:200px;height:200px" alt="...">
+                    <div class="caption">
+                        <a href="/Students/Details/@Url.Content(item.StudentID.ToString())">
+                            <h3 style="text-align:center">
+                                @item.Student.NachName
+                            </h3>
+                        </a>
+                        @*<p>...</p>
+                        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>*@
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    }
+
+</div>

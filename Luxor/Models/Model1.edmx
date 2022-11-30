@@ -1,0 +1,352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NilModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CourseLevel">
+          <Key>
+            <PropertyRef Name="CourseLevelId" />
+          </Key>
+          <Property Name="CourseLevelId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Level" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Einschreibung">
+          <Key>
+            <PropertyRef Name="EinschreibungID" />
+          </Key>
+          <Property Name="EinschreibungID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Noten" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="KursID" Type="int" Nullable="false" />
+          <Property Name="StudentID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kurs">
+          <Key>
+            <PropertyRef Name="KursID" />
+          </Key>
+          <Property Name="KursID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titel" Type="nvarchar" MaxLength="50" />
+          <Property Name="Kredite" Type="int" />
+          <Property Name="KursBeschreibung" Type="nvarchar(max)" />
+          <Property Name="Preis" Type="int" />
+          <Property Name="Ebene" Type="tinyint" />
+          <Property Name="IstKursAktiv" Type="bit" />
+          <Property Name="Level2" Type="int" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NachName" Type="nvarchar" MaxLength="50" />
+          <Property Name="VorName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Einschreibung" Type="datetime" Nullable="false" />
+          <Property Name="FotoPfad" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <Association Name="FK__Kurs__Level2__36B12243">
+          <End Role="CourseLevel" Type="Self.CourseLevel" Multiplicity="0..1" />
+          <End Role="Kurs" Type="Self.Kurs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseLevel">
+              <PropertyRef Name="CourseLevelId" />
+            </Principal>
+            <Dependent Role="Kurs">
+              <PropertyRef Name="Level2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Einschreibung_dbo_Kors_KursID">
+          <End Role="Kurs" Type="Self.Kurs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Einschreibung" Type="Self.Einschreibung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kurs">
+              <PropertyRef Name="KursID" />
+            </Principal>
+            <Dependent Role="Einschreibung">
+              <PropertyRef Name="KursID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Einschreibung_dbo_Student_StudentID">
+          <End Role="Student" Type="Self.Student" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Einschreibung" Type="Self.Einschreibung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="Einschreibung">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="funcGetKursByTitel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Titel" Type="nvarchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="KursID" Type="int" Nullable="false" />
+                <Property Name="Titel" Type="nvarchar" MaxLength="50" />
+                <Property Name="Kredite" Type="int" />
+                <Property Name="KursBeschreibung" Type="nvarchar(max)" />
+                <Property Name="Preis" Type="int" />
+                <Property Name="Ebene" Type="tinyint" />
+                <Property Name="IstKursAktiv" Type="bit" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="GetKurs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="HinzufügKurs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Titel" Type="varchar" Mode="In" />
+          <Parameter Name="Kredite" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="NilModelStoreContainer">
+          <EntitySet Name="CourseLevel" EntityType="Self.CourseLevel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Einschreibung" EntityType="Self.Einschreibung" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kurs" EntityType="Self.Kurs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Kurs__Level2__36B12243" Association="Self.FK__Kurs__Level2__36B12243">
+            <End Role="CourseLevel" EntitySet="CourseLevel" />
+            <End Role="Kurs" EntitySet="Kurs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Einschreibung_dbo_Kors_KursID" Association="Self.FK_dbo_Einschreibung_dbo_Kors_KursID">
+            <End Role="Kurs" EntitySet="Kurs" />
+            <End Role="Einschreibung" EntitySet="Einschreibung" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Einschreibung_dbo_Student_StudentID" Association="Self.FK_dbo_Einschreibung_dbo_Student_StudentID">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Einschreibung" EntitySet="Einschreibung" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NilModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Einschreibung">
+          <Key>
+            <PropertyRef Name="EinschreibungID" />
+          </Key>
+          <Property Name="EinschreibungID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Noten" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="KursID" Type="Int32" Nullable="false" />
+          <Property Name="StudentID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Kurs" Relationship="Self.FK_dbo_Einschreibung_dbo_Kors_KursID" FromRole="Einschreibung" ToRole="Kurs" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_dbo_Einschreibung_dbo_Student_StudentID" FromRole="Einschreibung" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Kurs">
+          <Key>
+            <PropertyRef Name="KursID" />
+          </Key>
+          <Property Name="KursID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Kredite" Type="Int32" />
+          <NavigationProperty Name="Einschreibungs" Relationship="Self.FK_dbo_Einschreibung_dbo_Kors_KursID" FromRole="Kurs" ToRole="Einschreibung" />
+          <Property Name="KursBeschreibung" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Preis" Type="Int32" />
+          <Property Name="Ebene" Type="NilModel.KursEbene" />
+          <Property Name="IstKursAktiv" Type="Boolean" />
+          <Property Name="Level2" Type="Int32" />
+          <NavigationProperty Name="CourseLevel" Relationship="NilModel.FK__Kurs__Level2__36B12243" FromRole="Kurs" ToRole="CourseLevel" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NachName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Einschreibung" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FotoPfad" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Einschreibungs" Relationship="Self.FK_dbo_Einschreibung_dbo_Student_StudentID" FromRole="Student" ToRole="Einschreibung" />
+        </EntityType>
+        <Association Name="FK_dbo_Einschreibung_dbo_Kors_KursID">
+          <End Role="Kurs" Type="NilModel.Kurs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Einschreibung" Type="Self.Einschreibung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kurs">
+              <PropertyRef Name="KursID" />
+            </Principal>
+            <Dependent Role="Einschreibung">
+              <PropertyRef Name="KursID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Einschreibung_dbo_Student_StudentID">
+          <End Role="Student" Type="Self.Student" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Einschreibung" Type="Self.Einschreibung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="Einschreibung">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NilEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Einschreibungs" EntityType="Self.Einschreibung" />
+          <EntitySet Name="Kurs1" EntityType="NilModel.Kurs" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <AssociationSet Name="FK_dbo_Einschreibung_dbo_Kors_KursID" Association="Self.FK_dbo_Einschreibung_dbo_Kors_KursID">
+            <End Role="Kurs" EntitySet="Kurs1" />
+            <End Role="Einschreibung" EntitySet="Einschreibungs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Einschreibung_dbo_Student_StudentID" Association="Self.FK_dbo_Einschreibung_dbo_Student_StudentID">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Einschreibung" EntitySet="Einschreibungs" />
+          </AssociationSet>
+          <FunctionImport Name="funcGetKursByTitel" IsComposable="true" ReturnType="Collection(NilModel.funcGetKursByTitel_Result)">
+          <Parameter Name="Titel" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetKurs" EntitySet="Kurs1" ReturnType="Collection(NilModel.Kurs)" />
+          <FunctionImport Name="HinzufügKurs">
+            <Parameter Name="Titel" Mode="In" Type="String" />
+            <Parameter Name="Kredite" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="CourseLevels" EntityType="NilModel.CourseLevel" />
+          <AssociationSet Name="FK__Kurs__Level2__36B12243" Association="NilModel.FK__Kurs__Level2__36B12243">
+            <End Role="CourseLevel" EntitySet="CourseLevels" />
+            <End Role="Kurs" EntitySet="Kurs1" />
+          </AssociationSet>
+        </EntityContainer>
+        <ComplexType Name="funcGetKursByTitel_Result">
+          <Property Type="Int32" Name="KursID" Nullable="false" />
+          <Property Type="String" Name="Titel" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Kredite" Nullable="true" />
+          <Property Type="String" Name="KursBeschreibung" Nullable="true" />
+          <Property Type="Int32" Name="Preis" Nullable="true" />
+          <Property Type="Byte" Name="Ebene" Nullable="true" />
+          <Property Type="Boolean" Name="IstKursAktiv" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetKurs_Result">
+          <Property Type="Int32" Name="KursID" Nullable="false" />
+          <Property Type="String" Name="Titel" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Kredite" Nullable="true" />
+          <Property Type="String" Name="KursBeschreibung" Nullable="true" />
+          <Property Type="Int32" Name="Preis" Nullable="true" />
+          <Property Type="Byte" Name="Ebene" Nullable="true" />
+          <Property Type="Boolean" Name="IstKursAktiv" Nullable="true" />
+        </ComplexType>
+        <EnumType Name="KursEbene" UnderlyingType="Byte">
+          <Member Name="Anfänger" Value="1" />
+          <Member Name="Mittlere" Value="2" />
+          <Member Name="Fortgeschritten" Value="3" />
+        </EnumType>
+        <EntityType Name="CourseLevel">
+          <Key>
+            <PropertyRef Name="CourseLevelId" />
+          </Key>
+          <Property Name="CourseLevelId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Level" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Kurs" Relationship="NilModel.FK__Kurs__Level2__36B12243" FromRole="CourseLevel" ToRole="Kurs" />
+        </EntityType>
+        <Association Name="FK__Kurs__Level2__36B12243">
+          <End Type="NilModel.CourseLevel" Role="CourseLevel" Multiplicity="0..1" />
+          <End Type="NilModel.Kurs" Role="Kurs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseLevel">
+              <PropertyRef Name="CourseLevelId" />
+            </Principal>
+            <Dependent Role="Kurs">
+              <PropertyRef Name="Level2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NilModelStoreContainer" CdmEntityContainer="NilEntities">
+          <EntitySetMapping Name="Einschreibungs">
+            <EntityTypeMapping TypeName="NilModel.Einschreibung">
+              <MappingFragment StoreEntitySet="Einschreibung">
+                <ScalarProperty Name="EinschreibungID" ColumnName="EinschreibungID" />
+                <ScalarProperty Name="Noten" ColumnName="Noten" />
+                <ScalarProperty Name="KursID" ColumnName="KursID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kurs1">
+            <EntityTypeMapping TypeName="NilModel.Kurs">
+              <MappingFragment StoreEntitySet="Kurs">
+                <ScalarProperty Name="Level2" ColumnName="Level2" />
+                <ScalarProperty Name="IstKursAktiv" ColumnName="IstKursAktiv" />
+                <ScalarProperty Name="Ebene" ColumnName="Ebene" />
+                <ScalarProperty Name="Preis" ColumnName="Preis" />
+                <ScalarProperty Name="KursBeschreibung" ColumnName="KursBeschreibung" />
+                <ScalarProperty Name="KursID" ColumnName="KursID" />
+                <ScalarProperty Name="Titel" ColumnName="Titel" />
+                <ScalarProperty Name="Kredite" ColumnName="Kredite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="NilModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="NachName" ColumnName="NachName" />
+                <ScalarProperty Name="VorName" ColumnName="VorName" />
+                <ScalarProperty Name="Einschreibung" ColumnName="Einschreibung" />
+                <ScalarProperty Name="FotoPfad" ColumnName="FotoPfad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="funcGetKursByTitel" FunctionName="NilModel.Store.funcGetKursByTitel">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="NilModel.funcGetKursByTitel_Result">
+                <ScalarProperty Name="KursID" ColumnName="KursID" />
+                <ScalarProperty Name="Titel" ColumnName="Titel" />
+                <ScalarProperty Name="Kredite" ColumnName="Kredite" />
+                <ScalarProperty Name="KursBeschreibung" ColumnName="KursBeschreibung" />
+                <ScalarProperty Name="Preis" ColumnName="Preis" />
+                <ScalarProperty Name="Ebene" ColumnName="Ebene" />
+                <ScalarProperty Name="IstKursAktiv" ColumnName="IstKursAktiv" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetKurs" FunctionName="NilModel.Store.GetKurs">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="HinzufügKurs" FunctionName="NilModel.Store.HinzufügKurs" />
+          <EntitySetMapping Name="CourseLevels">
+            <EntityTypeMapping TypeName="NilModel.CourseLevel">
+              <MappingFragment StoreEntitySet="CourseLevel">
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="CourseLevelId" ColumnName="CourseLevelId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Kein" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

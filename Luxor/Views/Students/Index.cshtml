@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Luxor.Models.Student>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NachName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VorName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Einschreibung)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FotoPfad)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NachName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VorName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Einschreibung)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.FotoPfad)*@
+            @if (!string.IsNullOrWhiteSpace(item.FotoPfad))
+            {<img width="50" height="50"
+                  src="~/Content/images/Studenten/@Url.Content(item.FotoPfad)"
+                  alt="Alternate Text" />
+            }
+
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.StudentID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.StudentID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.StudentID })
+        </td>
+    </tr>
+}
+
+</table>

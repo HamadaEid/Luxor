@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Luxor.Models.Kurs>
+
+@{
+    ViewBag.Title = "Test";
+}
+
+<h2>Test</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Titel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kredite)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KursBeschreibung)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Preis)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ebene)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IstKursAktiv)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Titel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Kredite)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KursBeschreibung)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Preis)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ebene)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IstKursAktiv)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.KursID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.KursID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.KursID })
+        </td>
+    </tr>
+}
+
+</table>

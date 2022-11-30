@@ -1,0 +1,49 @@
+﻿@using Luxor.Models
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Luxor", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                @if (User.IsInRole(RoleName.Manager))
+
+                {
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Kurse", "Index", "Kurs")</li>
+                    <li>@Html.ActionLink("Studenten", "Index", "Students")</li>
+                    <li>@Html.ActionLink("Einschreibung", "Index", "Einschreibungs")</li>
+                    @*<li>@Html.ActionLink("Lookup", "Index", "KursEbene")</li>*@
+
+                    <!--<li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Kurse", "Index", "Kurs")</li>
+                            <li>@Html.ActionLink("Studenten", "Index", "Students")</li>
+                            <li>@Html.ActionLink("Einschreibung", "Index", "Einschreibungs")</li>
+                            <li>@Html.ActionLink("DeleteMultiple", "IndexMultipleDelete", "Kurs")</li>-->
+                            @*<li>@Html.ActionLink("Lookup", "Index", "KursEbene")</li>*@
+
+                            <!--<li role="separator" class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>-->
+
+                }
+            </ul>
+            @Html.Partial("_LoginPartial")
+            @if (User.IsInRole(RoleName.Manager))
+            {
+
+                @Html.Partial("_Search")
+            }
+
+        </div>
+    </div>
+</div>

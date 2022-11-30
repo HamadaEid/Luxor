@@ -1,0 +1,305 @@
+﻿@using Luxor.Models
+@{
+    var CourseStats = (List<CourseStats>)ViewBag.CourseStats;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxor - Meine ASP.NET-Anwendung</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+
+    <link rel="stylesheet" href="~/Content/toastr.css" />
+
+    <link rel="stylesheet" src="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" />
+
+
+    <link rel="stylesheet" src="https://cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap4.min.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+    <style>  /*source codepen*/
+
+
+        .footer-icons ul li {
+            display: inline-block;
+        }
+
+            .footer-icons ul li a {
+                border: 1px solid #444;
+                color: #0094ff;
+                display: block;
+                font-size: 16px;
+                height: 40px;
+                line-height: 38px;
+                margin-right: 5px;
+                text-align: center;
+                width: 40px;
+                border-radius: 50%;
+            }
+
+        .footer-icons {
+            text-align: center;
+        }
+
+        .footer-contacts p span {
+            color: #3EC1D5;
+            font-weight: 700;
+        }
+
+        .popular-tag ul li {
+            display: inline-block;
+        }
+
+        .footer-content {
+            display: block;
+            overflow: hidden;
+        }
+
+        .popular-tag ul li a:hover,
+        .footer-icons ul li a:hover {
+            background: #3EC1D5;
+            border: 1px solid #3EC1D5;
+            color: #fff;
+        }
+
+        .popular-tag ul li a {
+            border: 1px solid #444;
+            border-radius: 30px;
+            color: #444;
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 5px 3px;
+            padding: 5px 10px;
+            position: relative;
+            text-decoration: none;
+            text-transform: capitalize;
+            transition: all 0.4s ease 0s;
+            width: 70px;
+            text-align: center;
+        }
+
+        .footer-area-bottom {
+            background: #f1f1f1 none repeat scroll 0 0;
+            padding: 15px 0;
+        }
+
+        .copyright-text a:hover {
+            text-decoration: underline;
+            color: #3EC1D5;
+        }
+
+        .copyright-text a {
+            color: #444;
+        }
+
+        .copyright > p {
+            margin-bottom: 0;
+            color: #444;
+        }
+
+        .credits {
+            padding-top: 5px;
+            text-align: center;
+        }
+
+            .credits a {
+                color: #000;
+            }
+    </style>
+    @*<style>
+
+                .megasubmenu{ padding: 20px; }
+
+        @@media (min-width: 992px){
+          .dropdown-menu .dropdown-toggle:after{
+            border-top: .3em solid transparent;
+              border-right: 0;
+              border-bottom: .3em solid transparent;
+              border-left: .3em solid;
+          }
+          .dropdown-menu{
+            margin:0;
+          }
+          .megasubmenu{
+            left:100%; top:0; min-height: 100%; min-width:500px;
+          }
+          .dropdown-menu > li:hover .megasubmenu{
+            display: block;
+          }
+        }
+            </style>*@
+
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-2">
+            @if (CourseStats != null)
+            {
+                foreach (var item in CourseStats)
+                {
+                    @Html.Partial("_KursEinschreibungÜberblick", item)
+                }
+            }
+
+        </div>
+        <div class="col-md-10">
+
+            @Html.Partial("_NavBar")
+            @*<div class="navbar navbar-inverse navbar-fixed-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            @Html.ActionLink("Luxor", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                <li>@Html.ActionLink("Kurse", "Index", "Kurs")</li>
+                                <li>@Html.ActionLink("Studenten", "Index", "Students")</li>
+                                <li>@Html.ActionLink("Einschreibung", "Index", "Einschreibungs")</li>
+
+                            </ul>
+                            @Html.Partial("_LoginPartial")
+                        </div>
+                    </div>
+                </div>*@
+            <div class="container body-content">
+                @RenderBody()
+                <hr />
+                @Html.Partial("_Footer")
+
+                @*<footer>
+                        <p>&copy; @DateTime.Now.Year - Meine ASP.NET-Anwendung</p>
+                    </footer>*@
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/toastr.js"></script>
+
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+    <script src=" https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+    <script src=" https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js|https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src=" https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.3.0/js/responsive.bootstrap4.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                responsive: {
+                    details: {
+                        display: $.fn.dataTable.Responsive.display.modal({
+                            header: function (row) {
+                                var data = row.data();
+                                return 'Details for ' + data[0] + ' ' + data[1];
+                            }
+                        }),
+                        renderer: $.fn.dataTable.Responsive.renderer.tableAll({
+                            tableClass: 'table'
+                        })
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+        $(".datepicker").datepicker({
+            dateFormat: "dd-mm-yy",
+            changemonth: true,
+            changeyear: true,
+            yeaRange: "-10:+10",
+        });
+    });
+
+
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
+    $(function () {
+        $("#accordion").accordion();
+    });
+
+
+    $(function () {
+        var tabs = $("#tabs").tabs();
+        var previouslyFocused = false;
+
+        tabs.find(".ui-tabs-nav").sortable({
+            axis: "x",
+
+            // Sortable removes focus, so we need to restore it if the tab was focused
+            // prior to sorting
+            start: function (event, ui) {
+                previouslyFocused = document.activeElement === ui.item[0];
+            },
+            stop: function (event, ui) {
+                tabs.tabs("refresh");
+                if (previouslyFocused) {
+                    ui.item.trigger("focus");
+                }
+            }
+        });
+    });
+</script>
+@*<script>
+
+
+    $(document).on('click', '.dropdown-menu', function (e) {
+        e.stopPropagation();
+    });
+
+    // clickable on mobile view
+    if ($(window).width() < 992) {
+        $('.has-submenu a').click(function (e) {
+            e.preventDefault();
+            $(this).next('.megasubmenu').toggle();
+
+            $('.dropdown').on('hide.bs.dropdown', function () {
+                $(this).find('.megasubmenu').hide();
+            })
+        });
+    }
+</script>*@

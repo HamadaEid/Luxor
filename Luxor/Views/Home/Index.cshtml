@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@*<div class="jumbotron">
+        <h1>ASP.NET</h1>
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    </div>*@
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+
+
+
+
+<style type="text/css">
+    #map_canvas {
+        height: 600px;
+    }
+</style>
+
+
+
+
+@Html.Partial("_Carousel")
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Kurse</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        @*<p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>*@
+        <p>
+            @Html.ActionLink("Kurse", "Index", "Kurs", null, new { @class = "btn btn-primary" })
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h2>Studenten</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        @*<p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>*@
+        <p>
+            @Html.ActionLink("Studenten", "Index", "Students", null, new { @class = "btn btn-primary" })
+        </p>
+    </div>
+    @*<div class="col-md-4">
+            <h2>Web Hosting</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        </div>*@
+</div>
+
+<script>
+
+    var cities = @Html.Raw(Json.Encode(Model));
+
+
+
+    $(document).ready(function () {
+
+        (function () {
+            //map options
+
+            var options = {
+                zoom: 6,
+                center: new google.maps.LatLng(52.122749178442675, 11.626994584514913),
+                mapTypeId: google.maps.MapTypeId.TERRAIN,
+                mapTypeControl: false
+            };
+
+
+            var map = new google.maps.Map(document.getElementById('map_canvas'), options);
+
+            for (var i = 0; i < cities.length; i++) {
+                var marker = new google.maps.Marker({
+                    position: new google.maps.Lating(cities[i].Lat, cities[i].Lng),
+                    map: map,
+                    title: cities[i].Title
+                });
+            (function (marker, i) {
+
+                google.maps.event.addListener(marker, 'click', function () {
+                    infowindow = new google.maps.InfoWindow({
+
+                        content: cities[i].Title
+
+                    });
+                    infowindow.open(map, marker);
+
+                });
+
+
+            })(marker, i);
+        }
+    })();
+    });
+
+
+
+
+</script>
+
+<div id="map_canvas"></div>

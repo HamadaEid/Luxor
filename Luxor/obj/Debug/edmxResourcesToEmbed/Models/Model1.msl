@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="NilModelStoreContainer" CdmEntityContainer="NilEntities">
+    <EntitySetMapping Name="Einschreibungs">
+      <EntityTypeMapping TypeName="NilModel.Einschreibung">
+        <MappingFragment StoreEntitySet="Einschreibung">
+          <ScalarProperty Name="EinschreibungID" ColumnName="EinschreibungID" />
+          <ScalarProperty Name="Noten" ColumnName="Noten" />
+          <ScalarProperty Name="KursID" ColumnName="KursID" />
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Kurs1">
+      <EntityTypeMapping TypeName="NilModel.Kurs">
+        <MappingFragment StoreEntitySet="Kurs">
+          <ScalarProperty Name="Level2" ColumnName="Level2" />
+          <ScalarProperty Name="IstKursAktiv" ColumnName="IstKursAktiv" />
+          <ScalarProperty Name="Ebene" ColumnName="Ebene" />
+          <ScalarProperty Name="Preis" ColumnName="Preis" />
+          <ScalarProperty Name="KursBeschreibung" ColumnName="KursBeschreibung" />
+          <ScalarProperty Name="KursID" ColumnName="KursID" />
+          <ScalarProperty Name="Titel" ColumnName="Titel" />
+          <ScalarProperty Name="Kredite" ColumnName="Kredite" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Students">
+      <EntityTypeMapping TypeName="NilModel.Student">
+        <MappingFragment StoreEntitySet="Student">
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="NachName" ColumnName="NachName" />
+          <ScalarProperty Name="VorName" ColumnName="VorName" />
+          <ScalarProperty Name="Einschreibung" ColumnName="Einschreibung" />
+          <ScalarProperty Name="FotoPfad" ColumnName="FotoPfad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="funcGetKursByTitel" FunctionName="NilModel.Store.funcGetKursByTitel">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="NilModel.funcGetKursByTitel_Result">
+          <ScalarProperty Name="KursID" ColumnName="KursID" />
+          <ScalarProperty Name="Titel" ColumnName="Titel" />
+          <ScalarProperty Name="Kredite" ColumnName="Kredite" />
+          <ScalarProperty Name="KursBeschreibung" ColumnName="KursBeschreibung" />
+          <ScalarProperty Name="Preis" ColumnName="Preis" />
+          <ScalarProperty Name="Ebene" ColumnName="Ebene" />
+          <ScalarProperty Name="IstKursAktiv" ColumnName="IstKursAktiv" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetKurs" FunctionName="NilModel.Store.GetKurs" />
+    <FunctionImportMapping FunctionImportName="HinzufügKurs" FunctionName="NilModel.Store.HinzufügKurs" />
+    <EntitySetMapping Name="CourseLevels">
+      <EntityTypeMapping TypeName="NilModel.CourseLevel">
+        <MappingFragment StoreEntitySet="CourseLevel">
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="CourseLevelId" ColumnName="CourseLevelId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

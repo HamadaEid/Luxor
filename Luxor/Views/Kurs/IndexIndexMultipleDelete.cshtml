@@ -1,0 +1,112 @@
+﻿@model IEnumerable<Luxor.Models.Kurs>
+
+@{
+    ViewBag.Title = "IndexIndexMultipleDelete";
+}
+
+<h2>IndexIndexMultipleDelete</h2>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#parent").click(function () {
+
+            $(".child").prop("checked", this.checked);
+
+        });
+        $('.child').click(function () {
+            if ($('.child:checked').length == $('.child').length) {
+                $('#parent').prop('checked', true);
+            } else {
+                $('#parent').prob('checked', false);
+            }
+
+
+        });
+
+    });
+
+
+
+</script>
+
+@using (Html.BeginForm("IndexMultipleRecordsDelete", "Kurs", FormMethod.Post))
+{
+    <button type="submit" value="Delete"
+            class="btn btn-sm btn-danger rounded-0"
+            onclick="return confirm('Are you sure?')">
+
+        <span class="glyphicon glyphicon-trash" aria-hidden="true">Delete</span>
+    </button>
+    <br />
+    <br />
+}
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th><input type="checkbox" id="parent" class="custom-checkbox" /></th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Titel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kredite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KursBeschreibung)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Preis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ebene)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IstKursAktiv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseLevel.Level)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <input type="checkbox" name="ID" value="@item.KursID"
+                           class="custom-checkbox child" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kredite)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KursBeschreibung)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Preis)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ebene)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IstKursAktiv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseLevel.Level)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.KursID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.KursID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.KursID })
+                </td>
+            </tr>
+        }
+
+    </table>

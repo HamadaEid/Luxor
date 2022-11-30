@@ -1,0 +1,90 @@
+﻿@model Luxor.Models.Student
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Student</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NachName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NachName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VorName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VorName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Einschreibung)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Einschreibung)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FotoPfad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FotoPfad)
+        </dd>
+
+    </dl>
+</div>
+
+
+<br />
+<table class="table table-condensed table-responsive">
+    <tr>
+        <td> Kurs Titel</td>
+        <td> Kredite</td>
+        <td> Noten</td>
+
+    </tr>
+    @foreach (var einschreibung in Model.Einschreibungs)
+    {
+        <tr>
+            <td>@einschreibung.Kurs.Titel</td>
+            <td>@einschreibung.Kurs.Kredite</td>
+            <td>@einschreibung.Noten</td>
+        </tr>
+
+
+    }
+</table>
+    @foreach (var einschreibung in Model.Einschreibungs)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">@einschreibung.Kurs.Titel-@einschreibung.Kurs.Kredite</div>
+            <div  class="panel-body">
+                 Noten: @einschreibung.Noten
+                <p>
+
+                    @Html.ActionLink("Edit", "Edit", "Einschreibungs", new { id = einschreibung.EinschreibungID }, null )
+                </p>
+            </div>
+        </div>
+        
+
+
+
+    }
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StudentID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

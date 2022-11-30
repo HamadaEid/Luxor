@@ -1,0 +1,56 @@
+﻿@model Luxor.Models.Student
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Student</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NachName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NachName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VorName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VorName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Einschreibung)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Einschreibung)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FotoPfad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FotoPfad)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
